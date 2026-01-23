@@ -15,8 +15,11 @@ Assets/
 ├── Scenes/              # Game scenes
 │   └── Battle.unity     # Main battle scene
 ├── Scripts/             # C# game scripts
+│   ├── Blinking.cs      # Blinking effect controller
 │   ├── Bullet.cs        # Bullet movement and behavior
-│   └── PlayerShooting1.cs # Player shooting system
+│   ├── PlayerMovement.cs # Player movement logic
+│   ├── PlayerShooting1.cs # Player shooting system
+│   └── ShowLog.cs       # Debug logging utility
 └── Space Shooter Template FREE/
     ├── Animation/       # Animation assets
     ├── Documentation/   # Template documentation
@@ -51,6 +54,12 @@ Assets/
 
 ## Scripts
 
+### Blinking.cs
+Manages blinking visual effects for characters or objects.
+
+### PlayerMovement.cs
+Handles player character movement and input processing.
+
 ### PlayerShooting1.cs
 Handles player shooting mechanics with mouse input detection. Features include:
 - Mouse button hold detection for continuous shooting
@@ -68,6 +77,9 @@ Controls bullet movement behavior. Features include:
 
 **Public Variables:**
 - `flySpeed`: Speed of bullet movement (units per second)
+
+### ShowLog.cs
+Debug utility for displaying logs in-game.
 
 ## Building
 
