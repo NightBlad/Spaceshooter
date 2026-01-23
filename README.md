@@ -10,12 +10,13 @@ This is a space-themed shooter game where players control a spacecraft and battl
 
 ```
 Assets/
+├── Prefabs/             # Game prefabs
+│   └── Bullet.prefab    # Bullet prefab for shooting
 ├── Scenes/              # Game scenes
 │   └── Battle.unity     # Main battle scene
 ├── Scripts/             # C# game scripts
-│   ├── Blinking.cs      # Blinking effect controller
-│   ├── PlayerMovement.cs # Player movement logic
-│   └── ShowLog.cs       # Debug logging utility
+│   ├── Bullet.cs        # Bullet movement and behavior
+│   └── PlayerShooting1.cs # Player shooting system
 └── Space Shooter Template FREE/
     ├── Animation/       # Animation assets
     ├── Documentation/   # Template documentation
@@ -39,25 +40,34 @@ Assets/
 
 ## Controls
 
-(Update this section with actual game controls once implemented)
+- **Mouse Left Click (Hold)**: Shoot bullets at enemies
 
 ## Features
 
-- Player movement mechanics
-- Enemy combat system
-- Visual effects (blinking, animations)
-- Scene management
+- Player shooting system with customizable fire rate
+- Bullet projectiles with configurable speed
+- Automatic bullet cleanup when off-screen
+- Object pooling through Unity's Instantiate system
 
 ## Scripts
 
-### PlayerMovement.cs
-Handles player character movement and input processing.
+### PlayerShooting1.cs
+Handles player shooting mechanics with mouse input detection. Features include:
+- Mouse button hold detection for continuous shooting
+- Configurable shooting interval to control fire rate
+- Instantiates bullet prefabs at player position
 
-### Blinking.cs
-Manages blinking visual effects for characters or objects.
+**Public Variables:**
+- `bulletPrefabs`: Reference to the Bullet prefab
+- `shootingInterval`: Time delay between shots (in seconds)
 
-### ShowLog.cs
-Debug utility for displaying logs in-game.
+### Bullet.cs
+Controls bullet movement behavior. Features include:
+- Upward movement with configurable speed
+- Uses Time.deltaTime for frame-rate independent movement
+
+**Public Variables:**
+- `flySpeed`: Speed of bullet movement (units per second)
 
 ## Building
 
