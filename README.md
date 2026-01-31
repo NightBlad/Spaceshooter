@@ -10,28 +10,33 @@ This is a space-themed shooter game where players control a spacecraft and battl
 
 ```
 Assets/
+├── Animations/          # Animation clips (currently empty)
+├── EnemyHealth.cs       # Enemy health script (root level)
 ├── Prefabs/             # Game prefabs
-│   └── Bullet.prefab    # Bullet prefab for shooting
+│   ├── Bullet.prefab            # Bullet projectile prefab
+│   ├── Enemy Explosion.prefab   # Explosion visual effect
+│   └── Enemy_01.prefab          # Enemy spaceship prefab
 ├── Scenes/              # Game scenes
 │   └── Battle.unity     # Main battle scene
 ├── Scripts/             # C# game scripts
-│   ├── Blinking.cs      # Blinking effect controller
-│   ├── Bullet.cs        # Bullet movement and behavior
-│   ├── PlayerMovement.cs # Player movement logic
-│   ├── PlayerShooting1.cs # Player shooting system
-│   └── ShowLog.cs       # Debug logging utility
+│   ├── Blinking.cs          # Blinking sprite effect
+│   ├── Bullet.cs            # Bullet movement behavior
+│   ├── EnemyHealth.cs       # Enemy health and death
+│   ├── PlayerMovement.cs    # Mouse-based player control
+│   ├── PlayerShooting1.cs   # Player shooting system
+│   └── ShowLog.cs           # Debug logging utility
 └── Space Shooter Template FREE/
-    ├── Animation/       # Animation assets
-    ├── Documentation/   # Template documentation
-    ├── Prefabs/        # Reusable prefab objects
-    ├── Scenes/         # Additional template scenes
-    ├── Scripts/        # Template scripts
-    └── Sprites/        # Sprite assets
+    ├── Animation/       # Template animation assets
+    ├── Documentation/   # Template documentation and guides
+    ├── Prefabs/         # Template prefab objects
+    ├── Scenes/          # Template example scenes
+    ├── Scripts/         # Template scripts
+    └── Sprites/         # Sprite assets and textures
 ```
 
 ## Requirements
 
-- **Unity**: 2021.3 or later (or version specified in ProjectSettings/ProjectVersion.txt)
+- **Unity**: 2022.3.62f3 or later
 - **.NET Framework**: Compatible with the Unity installation
 
 ## Getting Started
@@ -43,22 +48,35 @@ Assets/
 
 ## Controls
 
+- **Mouse Movement**: Control player spaceship position (follows cursor)
 - **Mouse Left Click (Hold)**: Shoot bullets at enemies
 
 ## Features
 
-- Player shooting system with customizable fire rate
-- Bullet projectiles with configurable speed
-- Automatic bullet cleanup when off-screen
-- Object pooling through Unity's Instantiate system
+- **Mouse-based player control**: Player spaceship follows mouse cursor within camera bounds
+- **Customizable movement boundaries**: Configure allowed movement area per side
+- **Player shooting system**: Continuous fire with customizable fire rate
+- **Bullet projectiles**: Configurable speed with automatic cleanup
+- **Enemy system**: Enemies with health and death mechanics featuring explosion effects
+- **Visual effects**: Blinking sprite animations and explosion prefabs
 
 ## Scripts
 
 ### Blinking.cs
-Manages blinking visual effects for characters or objects.
+Controls sprite blinking visual effect by toggling sprite renderer visibility each frame. Used for creating attention-grabbing visual effects on game objects.
 
 ### PlayerMovement.cs
-Handles player character movement and input processing.
+Handles player spaceship movement based on mouse position. Features include:
+- Mouse cursor following within camera bounds
+- Configurable movement limits for each side (left, right, top, bottom)
+- Smooth position clamping to keep player within allowed area
+- Works with orthographic camera setup
+
+**Public Variables:**
+- `leftLimitFactor`: Fraction of camera width allowed toward left (0-1)
+- `rightLimitFactor`: Fraction of camera width allowed toward right (0-1)
+- `topLimitFactor`: Fraction of camera height allowed toward top (0-1)
+- `bottomLimitFactor`: Fraction of camera height allowed toward bottom (0-1)
 
 ### PlayerShooting1.cs
 Handles player shooting mechanics with mouse input detection. Features include:
@@ -78,8 +96,17 @@ Controls bullet movement behavior. Features include:
 **Public Variables:**
 - `flySpeed`: Speed of bullet movement (units per second)
 
+### EnemyHealth.cs
+Manages enemy health and death behavior. Features include:
+- Collision detection with bullets (2D trigger)
+- Spawns explosion effect on death
+- Destroys enemy and explosion objects automatically
+
+**Public Variables:**
+- `explosionPrefab`: Reference to explosion visual effect prefab
+
 ### ShowLog.cs
-Debug utility for displaying logs in-game.
+Debug utility for displaying logs in-game. Outputs "Hello World!" on start and frame count updates each frame.
 
 ## Building
 
