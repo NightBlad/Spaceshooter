@@ -15,14 +15,18 @@ Assets/
 ├── Prefabs/             # Game prefabs
 │   ├── Bullet.prefab            # Bullet projectile prefab
 │   ├── Enemy Explosion.prefab   # Explosion visual effect
-│   └── Enemy_01.prefab          # Enemy spaceship prefab
+│   ├── Enemy_01.prefab          # Enemy spaceship prefab
+│   └── Player Explosion.prefab  # Player death explosion effect
 ├── Scenes/              # Game scenes
 │   └── Battle.unity     # Main battle scene
 ├── Scripts/             # C# game scripts
 │   ├── Blinking.cs          # Blinking sprite effect
 │   ├── Bullet.cs            # Bullet movement behavior
+│   ├── EnemyAttack.cs        # Enemy damage to player on trigger
 │   ├── EnemyHealth.cs       # Enemy health and death
+│   ├── Health.cs             # Base health and death handling
 │   ├── PlayerMovement.cs    # Mouse-based player control
+│   ├── PlayerHealth.cs       # Player health and death
 │   ├── PlayerShooting1.cs   # Player shooting system
 │   └── ShowLog.cs           # Debug logging utility
 └── Space Shooter Template FREE/
@@ -57,7 +61,8 @@ Assets/
 - **Customizable movement boundaries**: Configure allowed movement area per side
 - **Player shooting system**: Continuous fire with customizable fire rate
 - **Bullet projectiles**: Configurable speed with automatic cleanup
-- **Enemy system**: Enemies with health and death mechanics featuring explosion effects
+- **Health system**: Shared base health with damage handling and explosion on death
+- **Enemy attacks**: Enemies damage the player on trigger contact
 - **Visual effects**: Blinking sprite animations and explosion prefabs
 
 ## Scripts
@@ -96,14 +101,28 @@ Controls bullet movement behavior. Features include:
 **Public Variables:**
 - `flySpeed`: Speed of bullet movement (units per second)
 
-### EnemyHealth.cs
-Manages enemy health and death behavior. Features include:
-- Collision detection with bullets (2D trigger)
+### Health.cs
+Base health system for player and enemies. Features include:
+- Configurable starting health
+- Damage handling and death triggering
 - Spawns explosion effect on death
-- Destroys enemy and explosion objects automatically
 
 **Public Variables:**
 - `explosionPrefab`: Reference to explosion visual effect prefab
+- `defaultHealthPoint`: Starting health amount
+
+### EnemyHealth.cs
+Enemy-specific health behavior. Inherits from `Health` and logs when the enemy dies.
+
+### PlayerHealth.cs
+Player-specific health behavior. Inherits from `Health` and logs when the player dies.
+
+### EnemyAttack.cs
+Handles enemy damage to the player on 2D trigger contact. Also forces the enemy to die after dealing damage.
+
+**Public Variables:**
+- `health`: Reference to the enemy `EnemyHealth` component
+- `damage`: Damage dealt to the player
 
 ### ShowLog.cs
 Debug utility for displaying logs in-game. Outputs "Hello World!" on start and frame count updates each frame.
