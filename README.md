@@ -18,6 +18,7 @@ Assets/
 │   ├── Enemy_01.prefab          # Enemy spaceship prefab
 │   └── Player Explosion.prefab  # Player death explosion effect
 ├── Scenes/              # Game scenes
+│   ├── Main Menu.unity  # Main menu scene
 │   └── Battle.unity     # Main battle scene
 ├── Scripts/             # C# game scripts
 │   ├── Blinking.cs          # Blinking sprite effect
@@ -25,6 +26,7 @@ Assets/
 │   ├── EnemyAttack.cs        # Enemy damage to player on trigger
 │   ├── EnemyHealth.cs       # Enemy health and death
 │   ├── Health.cs             # Base health and death handling
+│   ├── MainMenu.cs          # Main menu scene controller
 │   ├── PlayerMovement.cs    # Mouse-based player control
 │   ├── PlayerHealth.cs       # Player health and death
 │   ├── PlayerShooting1.cs   # Player shooting system
@@ -47,7 +49,7 @@ Assets/
 
 1. **Clone or download** this repository
 2. **Open the project** in Unity Hub
-3. **Load the Battle scene** from Assets/Scenes/Battle.unity
+3. **Load the Main Menu scene** from Assets/Scenes/Main Menu.unity (or load Battle scene directly)
 4. **Press Play** to run the game
 
 ## Controls
@@ -123,6 +125,13 @@ Handles enemy damage to the player on 2D trigger contact. Also forces the enemy 
 **Public Variables:**
 - `health`: Reference to the enemy `EnemyHealth` component
 - `damage`: Damage dealt to the player
+
+### MainMenu.cs
+Controls the main menu scene functionality. Features include:
+- Play button handler that loads the Battle scene
+
+**Public Methods:**
+- `OnPlayButtonClicked()`: Loads the Battle scene when called
 
 ### ShowLog.cs
 Debug utility for displaying logs in-game. Outputs "Hello World!" on start and frame count updates each frame.
