@@ -21,6 +21,7 @@ Assets/
 │   ├── Main Menu.unity  # Main menu scene
 │   └── Battle.unity     # Main battle scene
 ├── Scripts/             # C# game scripts
+│   ├── BattleFlow.cs        # Battle scene game flow controller
 │   ├── Blinking.cs          # Blinking sprite effect
 │   ├── Bullet.cs            # Bullet movement behavior
 │   ├── EnemyAttack.cs        # Enemy damage to player on trigger
@@ -30,6 +31,7 @@ Assets/
 │   ├── PlayerMovement.cs    # Mouse-based player control
 │   ├── PlayerHealth.cs       # Player health and death
 │   ├── PlayerShooting1.cs   # Player shooting system
+│   ├── ScrollingBackground.cs # Scrolling background effect
 │   └── ShowLog.cs           # Debug logging utility
 └── Space Shooter Template FREE/
     ├── Animation/       # Template animation assets
@@ -65,9 +67,28 @@ Assets/
 - **Bullet projectiles**: Configurable speed with automatic cleanup
 - **Health system**: Shared base health with damage handling and explosion on death
 - **Enemy attacks**: Enemies damage the player on trigger contact
-- **Visual effects**: Blinking sprite animations and explosion prefabs
+- **Game flow management**: Win/lose conditions with UI state management
+- **Enemy tracking**: Static counter tracks living enemies for win condition
+- **Visual effects**: Blinking sprite animations, explosion prefabs, and scrolling background
 
 ## Scripts
+
+### BattleFlow.cs
+Manages battle scene game flow including win/lose conditions and UI state. Features include:
+- Game over detection when player dies
+- Game win detection when all enemies are destroyed
+- UI management for game over and win screens
+- Background music control
+- Return to main menu functionality
+
+**Public Variables:**
+- `gameOverUI`: Game over UI panel
+- `gameWinUI`: Game win UI panel
+- `playerHealth`: Reference to player health component
+- `bgMusic`: Background music game object
+
+**Public Methods:**
+- `ReturnToMainMenu()`: Loads the Main Menu scene
 
 ### Blinking.cs
 Controls sprite blinking visual effect by toggling sprite renderer visibility each frame. Used for creating attention-grabbing visual effects on game objects.
@@ -108,13 +129,21 @@ Base health system for player and enemies. Features include:
 - Configurable starting health
 - Damage handling and death triggering
 - Spawns explosion effect on death
+- Event callback support for death notification
 
 **Public Variables:**
 - `explosionPrefab`: Reference to explosion visual effect prefab
 - `defaultHealthPoint`: Starting health amount
+- `onDead`: Action event invoked when entity dies
 
 ### EnemyHealth.cs
-Enemy-specific health behavior. Inherits from `Health` and logs when the enemy dies.
+Enemy-specific health behavior. Inherits from `Health`. Features include:
+- Static counter tracking all living enemies
+- Increments counter on spawn, decrements on death
+- Used for win condition detection
+
+**Static Variables:**
+- `LivingEnemyCount`: Number of enemies currently alive
 
 ### PlayerHealth.cs
 Player-specific health behavior. Inherits from `Health` and logs when the player dies.
@@ -132,6 +161,16 @@ Controls the main menu scene functionality. Features include:
 
 **Public Methods:**
 - `OnPlayButtonClicked()`: Loads the Battle scene when called
+
+### ScrollingBackground.cs
+Creates scrolling background effect for visual depth. Features include:
+- Continuous vertical texture scrolling
+- Configurable scroll speed
+- Uses material texture offset for seamless looping
+
+**Public Variables:**
+- `bgRenderer`: Renderer component for the background
+- `speed`: Scrolling speed multiplier
 
 ### ShowLog.cs
 Debug utility for displaying logs in-game. Outputs "Hello World!" on start and frame count updates each frame.
