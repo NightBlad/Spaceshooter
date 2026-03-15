@@ -76,6 +76,8 @@ sysinfo.txt.meta
 
 # User Settings
 /UserSettings/
+/UserSettings/Layouts/
+*.dwlt
 
 # Visual Studio upgrade logs
 UpgradeLog.htm

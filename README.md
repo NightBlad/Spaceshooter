@@ -11,12 +11,12 @@ This is a space-themed shooter game where players control a spacecraft and battl
 ```
 Assets/
 ├── Animations/          # Animation clips (currently empty)
-├── EnemyHealth.cs       # Enemy health script (root level)
 ├── Prefabs/             # Game prefabs
 │   ├── Bullet.prefab            # Bullet projectile prefab
 │   ├── Enemy Explosion.prefab   # Explosion visual effect
 │   ├── Enemy_01.prefab          # Enemy spaceship prefab
-│   └── Player Explosion.prefab  # Player death explosion effect
+│   ├── Player Explosion.prefab  # Player death explosion effect
+│   └── Waypoint.prefab          # Waypoint marker prefab for paths
 ├── Scenes/              # Game scenes
 │   ├── Main Menu.unity  # Main menu scene
 │   └── Battle.unity     # Main battle scene
@@ -26,13 +26,16 @@ Assets/
 │   ├── Bullet.cs            # Bullet movement behavior
 │   ├── EnemyAttack.cs        # Enemy damage to player on trigger
 │   ├── EnemyHealth.cs       # Enemy health and death
+│   ├── FlyPath.cs           # Container for waypoint paths
 │   ├── Health.cs             # Base health and death handling
+│   ├── HealthBar.cs         # UI health bar controller
 │   ├── MainMenu.cs          # Main menu scene controller
 │   ├── PlayerMovement.cs    # Mouse-based player control
 │   ├── PlayerHealth.cs       # Player health and death
 │   ├── PlayerShooting1.cs   # Player shooting system
 │   ├── ScrollingBackground.cs # Scrolling background effect
-│   └── ShowLog.cs           # Debug logging utility
+│   ├── ShowLog.cs           # Debug logging utility
+│   └── Waypoint.cs          # Gizmo marker for path points
 └── Space Shooter Template FREE/
     ├── Animation/       # Template animation assets
     ├── Documentation/   # Template documentation and guides
@@ -66,9 +69,11 @@ Assets/
 - **Player shooting system**: Continuous fire with customizable fire rate
 - **Bullet projectiles**: Configurable speed with automatic cleanup
 - **Health system**: Shared base health with damage handling and explosion on death
+- **Health UI**: Dynamic health bar updates when health changes
 - **Enemy attacks**: Enemies damage the player on trigger contact
 - **Game flow management**: Win/lose conditions with UI state management
 - **Enemy tracking**: Static counter tracks living enemies for win condition
+- **Path support**: Waypoint and fly path components for path-based movement setup
 - **Visual effects**: Blinking sprite animations, explosion prefabs, and scrolling background
 
 ## Scripts
@@ -127,14 +132,30 @@ Controls bullet movement behavior. Features include:
 ### Health.cs
 Base health system for player and enemies. Features include:
 - Configurable starting health
+- Current health exposure for UI and gameplay logic
 - Damage handling and death triggering
 - Spawns explosion effect on death
-- Event callback support for death notification
+- Event callback support for death and health-change notifications
 
 **Public Variables:**
 - `explosionPrefab`: Reference to explosion visual effect prefab
 - `defaultHealthPoint`: Starting health amount
+- `healthPoint`: Current health value
 - `onDead`: Action event invoked when entity dies
+- `onHealthChanged`: Action event invoked when health value changes
+
+### FlyPath.cs
+Stores and manages waypoint references for path-based movement setups.
+
+**Public Variables:**
+- `waypoints`: Ordered waypoint list used by movement/path systems
+
+### HealthBar.cs
+Handles health bar UI updates by resizing a mask based on current health.
+
+**Public Variables:**
+- `mask`: `RectTransform` used to reveal/hide bar width
+- `health`: Reference to tracked `Health` component
 
 ### EnemyHealth.cs
 Enemy-specific health behavior. Inherits from `Health`. Features include:
@@ -171,6 +192,9 @@ Creates scrolling background effect for visual depth. Features include:
 **Public Variables:**
 - `bgRenderer`: Renderer component for the background
 - `speed`: Scrolling speed multiplier
+
+### Waypoint.cs
+Editor utility for path setup. Draws waypoint gizmos in scene view.
 
 ### ShowLog.cs
 Debug utility for displaying logs in-game. Outputs "Hello World!" on start and frame count updates each frame.
