@@ -26,7 +26,9 @@ Assets/
 │   ├── Bullet.cs            # Bullet movement behavior
 │   ├── EnemyAttack.cs        # Enemy damage to player on trigger
 │   ├── EnemyHealth.cs       # Enemy health and death
+│   ├── EnemySpawner.cs      # Wave-based enemy spawner
 │   ├── FlyPath.cs           # Container for waypoint paths
+│   ├── FlyPathAgent.cs      # Moves objects along fly paths
 │   ├── Health.cs             # Base health and death handling
 │   ├── HealthBar.cs         # UI health bar controller
 │   ├── MainMenu.cs          # Main menu scene controller
@@ -71,9 +73,10 @@ Assets/
 - **Health system**: Shared base health with damage handling and explosion on death
 - **Health UI**: Dynamic health bar updates when health changes
 - **Enemy attacks**: Enemies damage the player on trigger contact
+- **Wave spawning**: Spawns enemies in configurable waves and formations
 - **Game flow management**: Win/lose conditions with UI state management
 - **Enemy tracking**: Static counter tracks living enemies for win condition
-- **Path support**: Waypoint and fly path components for path-based movement setup
+- **Path support**: Waypoint, path agent, and fly path components for path-based movement
 - **Visual effects**: Blinking sprite animations, explosion prefabs, and scrolling background
 
 ## Scripts
@@ -149,6 +152,28 @@ Stores and manages waypoint references for path-based movement setups.
 
 **Public Variables:**
 - `waypoints`: Ordered waypoint list used by movement/path systems
+
+**Public Members:**
+- `this[int index]`: Returns waypoint world position at index
+
+### FlyPathAgent.cs
+Moves an object along a configured `FlyPath`. Features include:
+- Sequential waypoint navigation
+- Rotation toward movement direction
+- Auto-destroy when the end of the path is reached
+
+**Public Variables:**
+- `flyPath`: Assigned path to follow
+- `flySpeed`: Movement speed along the path
+
+### EnemySpawner.cs
+Spawns enemies in timed waves using formation offsets and fly paths. Features include:
+- Wave-by-wave spawn sequencing
+- Per-wave enemy count and formation offset
+- Per-wave path assignment, speed, and delay to next wave
+
+**Public Variables:**
+- `enemyWaves`: Config array of wave definitions
 
 ### HealthBar.cs
 Handles health bar UI updates by resizing a mask based on current health.
